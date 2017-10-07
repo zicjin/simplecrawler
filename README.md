@@ -1,5 +1,7 @@
 # Simple web crawler for node.js
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/simplecrawler/simplecrawler.svg)](https://greenkeeper.io/)
+
 [![NPM version](https://img.shields.io/npm/v/simplecrawler.svg)](https://www.npmjs.com/package/simplecrawler)
 [![Linux Build Status](https://img.shields.io/travis/cgiffard/node-simplecrawler/master.svg)](https://travis-ci.org/cgiffard/node-simplecrawler)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/cgiffard/node-simplecrawler/master.svg?label=Windows%20build)](https://ci.appveyor.com/project/cgiffard/node-simplecrawler/branch/master)
