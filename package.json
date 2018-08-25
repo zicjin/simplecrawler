@@ -1,14 +1,10 @@
 {
   "name": "simplecrawler-zic",
   "description": "Very straightforward, event driven web crawler. Features a flexible queue interface and a basic cache mechanism with extensible backend.",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "homepage": "https://github.com/zicjin/simplecrawler",
-  "author": "Christopher Giffard <christopher.giffard@cgiffard.com>",
-  "maintainers": [
-    "Christopher Giffard <christopher.giffard@cgiffard.com>",
-    "Fredrik Ekelund <fredrik@fredrik.computer>"
-  ],
-  "license": "BSD-2-Clause",
+  "author": "Cheney Jin <zicjin@gmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zicjin/simplecrawler"
