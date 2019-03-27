@@ -6,6 +6,9 @@ var path = require("path"),
 
 var Crawler = require("../");
 
+var routes = require("./lib/routes.js"),
+    Server = require("./lib/testserver.js");
+
 var should = chai.should();
 
 var makeCrawler = function (url) {
@@ -17,6 +20,15 @@ var makeCrawler = function (url) {
 // Runs a very simple crawl on an HTTP server
 describe("Crawler reliability", function() {
     this.slow("600ms");
+
+    before(function (done) {
+        this.server = new Server(routes);
+        this.server.listen(3000, done);
+    });
+
+    after(function (done) {
+        this.server.destroy(done);
+    });
 
     it("should be able to be started, then stopped, then started again", function(done) {
         var crawler = makeCrawler("http://127.0.0.1:3000/"),
@@ -221,6 +233,34 @@ describe("Crawler reliability", function() {
                 done();
             }, 10);
         }, 10);
+
+        localCrawler.start();
+    });
+
+    it("should only fetch every queue item once", function(done) {
+        var localCrawler = makeCrawler("http://127.0.0.1:3000/");
+        var timeout = localCrawler.interval * 2;
+        var buffer = [];
+
+        var _oldestUnfetchedItem = localCrawler.queue.oldestUnfetchedItem;
+        var _update = localCrawler.queue.update;
+
+        // emulate these methods are slower than crawler.interval
+        localCrawler.queue.oldestUnfetchedItem = function(callback) {
+            setTimeout(_oldestUnfetchedItem.bind(this, callback), timeout);
+        };
+        localCrawler.queue.update = function(id, updates, callback) {
+            setTimeout(_update.bind(this, id, updates, callback), timeout);
+        };
+
+        localCrawler.on("fetchstart", function(queueItem) {
+            buffer.push(queueItem.url);
+        });
+
+        localCrawler.on("complete", function() {
+            buffer.length.should.equal(8);
+            done();
+        });
 
         localCrawler.start();
     });
